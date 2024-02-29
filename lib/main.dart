@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _selectedIndex = 0;
+
+  static const List<Widget> _pages = <Widget>[
+    //MyHomePage(),
+    HealthCheckPage(),
+    SecondPage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,17 +37,17 @@ class MyApp extends StatelessWidget {
           title: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: const [
               Text(
                 "Hello X!",
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 "Let’s Learn More About  Your Plants",
-                style: GoogleFonts.poppins(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
@@ -98,9 +122,9 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
+                const Text(
                   "Your Previous Diseases",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
@@ -113,9 +137,38 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people_alt_rounded),
+              label: 'Community',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.camera_alt_rounded),
+              label: 'Detect',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.map_rounded), label: 'Map'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_2), label: 'Profile'),
+          ],
+          currentIndex: _selectedIndex,
+          fixedColor: const Color.fromARGB(255, 100, 189, 132),
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped,
+          showUnselectedLabels: true,
+        ),
       ),
     );
   }
+}
+
+class MyHomePage {
+  const MyHomePage();
 }
 
 class CardWidget extends StatelessWidget {
